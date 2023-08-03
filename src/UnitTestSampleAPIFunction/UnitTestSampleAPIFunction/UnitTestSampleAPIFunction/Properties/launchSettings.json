@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "UnitTestSampleAPIFunction": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7017",
+      "launchBrowser": false
+    }
+  }
+}
