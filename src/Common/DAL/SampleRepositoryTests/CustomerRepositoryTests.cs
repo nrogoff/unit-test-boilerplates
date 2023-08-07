@@ -15,7 +15,7 @@ namespace SampleRepositoryTests
         public TestSqlDatabaseFixture Fixture { get; }
 
         [Fact]
-        public async Task GetAllRecords_Customers_OK()
+        public async Task GetAllRecords_Customers_Expect500()
         {
             // Arrange
             using var context = Fixture.CreateContext();
@@ -26,7 +26,7 @@ namespace SampleRepositoryTests
 
             // Assert
             customers.Should().NotBeNull();
-            customers.Should().HaveCount(2);
+            customers.Should().HaveCount(500);
         }
     }
 }
