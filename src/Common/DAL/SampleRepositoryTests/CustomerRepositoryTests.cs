@@ -5,7 +5,7 @@ using SampleRepositoryTests.TestDatabases;
 namespace SampleRepositoryTests
 {
     /// <summary>
-    /// This is an exmaple of a repository test. Here we are using the xUnit fixture to create a SQL database to test against
+    /// This is an example of a repository test. Here we are using the xUnit fixture to create a SQL database to test against
     /// </summary>
     public class CustomerRepositoryTests : IClassFixture<TestSqlDatabaseFixture>
     {

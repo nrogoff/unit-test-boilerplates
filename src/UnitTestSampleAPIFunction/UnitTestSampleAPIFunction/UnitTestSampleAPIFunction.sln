@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleRepositoryTests", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestSampleAPIFunctionTests", "..\..\Common\DAL\UnitTestSampleAPIFunctionTests\UnitTestSampleAPIFunctionTests.csproj", "{38C9A759-CED2-4D24-9095-CC97E7C7B2E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "..\..\Common\Contracts\Contracts.csproj", "{045A7FB4-1D3E-46E8-8FE0-8F98183F3FDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "..\..\Common\Contracts\Contracts.csproj", "{045A7FB4-1D3E-46E8-8FE0-8F98183F3FDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

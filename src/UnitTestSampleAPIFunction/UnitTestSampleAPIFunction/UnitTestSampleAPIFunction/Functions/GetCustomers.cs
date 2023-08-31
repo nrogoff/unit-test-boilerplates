@@ -19,7 +19,7 @@ namespace UnitTestSampleAPIFunction.Functions
 {
     public class GetCustomers
     {
-        private readonly ILogger<GetCustomers> _logger;
+        private ILogger _logger;
         private readonly IConfiguration _config;
 
         /// <summary>
@@ -27,9 +27,9 @@ namespace UnitTestSampleAPIFunction.Functions
         /// </summary>
         /// <param name="log">The host injects ILogger and ILoggerFactory services into constructors.</param>
         /// <param name="config">The Configuration object injected by the host</param>
-        public GetCustomers(ILogger<GetCustomers> log, IConfiguration config)
+        public GetCustomers(IConfiguration config)
         {
-            _logger = log;
+            // _logger = log;
             _config = config;
         }
 
@@ -51,9 +51,9 @@ namespace UnitTestSampleAPIFunction.Functions
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "No customers matching the parameters could be found.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.InternalServerError, contentType: "application/json", bodyType: typeof(Exception), Description = "Internal Server Error.")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req)
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger logger)
         {
-
+            _logger = logger;
             #region Get the parameters from the query string
 
             // Each parameter has a default value in the configuration file.
