@@ -1,6 +1,9 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SampleDAL;
+using SampleRepository.Repositories;
 
 
 [assembly: FunctionsStartup(typeof(UnitTestSampleAPIFunction.Startup))]
@@ -42,11 +45,15 @@ namespace UnitTestSampleAPIFunction
             // Add the HttpClient to the collection of services. This is used to consume other APIs.
             //builder.Services.AddHttpClient();
 
-            // break code execution here to debug the startup class
-            //Debugger.Break();
+            // Add the dbContext to the collection of services
+            // The 'AddDbContext' method ensures that only one instance of the DbContext is created and shared throughout the lifetime of the application, improving performance and reducing the likelihood of concurrency issues.
+            builder.Services.AddDbContext<MyDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("SqlConnectionString")));
+
+            // Add Repositories to the collection of services
+            // The 'AddScoped' method registers a service with the container and specifies that a new instance of the service should be created once per client request (i.e. scoped lifetime).
+            builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
             
-
         }
     }
 

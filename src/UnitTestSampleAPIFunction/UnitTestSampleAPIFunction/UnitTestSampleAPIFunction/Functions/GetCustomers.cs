@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Logging;
 using SampleDAL;
+using SampleRepository.Repositories;
 
 namespace UnitTestSampleAPIFunction.Functions
 {
@@ -21,16 +22,18 @@ namespace UnitTestSampleAPIFunction.Functions
     {
         private ILogger _logger;
         private readonly IConfiguration _config;
+        private readonly ICustomerRepository _customerRepository;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="log">The host injects ILogger and ILoggerFactory services into constructors.</param>
         /// <param name="config">The Configuration object injected by the host</param>
-        public GetCustomers(IConfiguration config)
+        /// <param name="customerRepository"></param>
+        public GetCustomers(IConfiguration config, ICustomerRepository customerRepository)
         {
             // _logger = log;
             _config = config;
+            _customerRepository = customerRepository;
         }
 
         /// <summary>
