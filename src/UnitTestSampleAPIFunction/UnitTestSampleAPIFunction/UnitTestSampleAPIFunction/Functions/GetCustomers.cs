@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Logging;
@@ -59,13 +61,11 @@ namespace UnitTestSampleAPIFunction.Functions
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
             bodyType: typeof(CustomerListDto),
             Description = "The list of Customers, Total Count and Link to the next page.")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.NoContent, contentType: "application/json",
-            bodyType: typeof(CustomerListDto),
-            Description = "The request was not understood. Possibly a parameter is missing or incorrect.")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json",
-            bodyType: typeof(string), Description = "No customers matching the parameters could be found.")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.InternalServerError, contentType: "application/json",
-            bodyType: typeof(Exception), Description = "Internal Server Error.")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NoContent, Description = "The request was successful, but no customers matching the parameters could be found.")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "No customers matching the parameters could be found.")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.BadRequest, Description = "The request was not understood. Possibly a parameter is missing or incorrect.")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.Unauthorized, Description = "Unauthorized. The API Key is missing or incorrect.")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.InternalServerError, Description = "Internal Server Error.")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]
             HttpRequest req, ILogger logger)
@@ -155,19 +155,38 @@ namespace UnitTestSampleAPIFunction.Functions
 
             #endregion
 
-            #region Get the data from the database
+            #region Validate the parameters
+
+            // This is an example of how to validate the parameters and return a BadRequest if they are not valid
+            if (top > 500)
+            {
+                 return new BadRequestErrorMessageResult("The maximum number of records that can be returned is 500");
+            }
+
+            #endregion
+
+            #region Get the data from the database and return it
 
             // Get the data from the database using the top, skip, filter and orderBy parameters
             // Because handling a full featured filter is beyond the scope of this sample, we are only handling a simple filter on the Customer Surname
-            
-            
+
+            try
+            {
+                var response = new
+                {
+                    TotalCount = await _customerRepository.CountCustomers(filter).CountAsync(),
+                    Customers = await _customerRepository.GetCustomers(top, skip, filter, orderBy).ToListAsync(),
+                    NextLink = "coming soon"
+                };
+                return new OkObjectResult(response);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(eventId, e, "Error getting customers", logProps);
+                return new InternalServerErrorResult();
+            }
             
             #endregion
-
-            string responseMessage = "This HTTP triggered function executed successfully.";
-
-
-            return new OkObjectResult(responseMessage);
         }
     }
 

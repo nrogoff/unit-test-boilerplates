@@ -9,4 +9,5 @@ namespace SampleRepository.Repositories;
 public interface ICustomerRepository : IRepositoryBase<SalesLT_Customer>
 {
     public IQueryable<SalesLT_Customer> GetCustomers(int top, int skip, string filter, string orderBy);
+    public IQueryable<SalesLT_Customer> CountCustomers(string filter);
 }

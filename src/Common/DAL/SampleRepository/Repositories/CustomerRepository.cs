@@ -19,7 +19,7 @@ public class CustomerRepository : RepositoryBase<SalesLT_Customer, MyDbContext>,
     /// </summary>
     /// <param name="top">The number of records to take</param>
     /// <param name="skip">The number of records to skip</param>
-    /// <param name="filter">A term to wildcard search on</param>
+    /// <param name="filter">A term to wildcard search on LastName</param>
     /// <param name="orderBy">IGNORED for simplicity</param>
     /// <returns>An IQueryable List of Customers</returns>
     public IQueryable<SalesLT_Customer> GetCustomers(int top, int skip, string filter, string orderBy)
@@ -29,5 +29,16 @@ public class CustomerRepository : RepositoryBase<SalesLT_Customer, MyDbContext>,
             .OrderBy(c => c.LastName)
             .ThenBy(c => c.FirstName)
             .Skip(skip).Take(top);
+    }
+
+    /// <summary>
+    /// This is an example query that returns a count of customers as IQueryable.
+    /// </summary>
+    /// <param name="filter">A term wildcard search on LastName</param>
+    /// <returns></returns>
+    public IQueryable<SalesLT_Customer> CountCustomers(string filter)
+    {
+        return Context.SalesLT_Customers
+            .Where(c => c.LastName.Contains(filter));
     }
 }
