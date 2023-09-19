@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SampleDAL
 {
     // SalesOrderHeader
-    public class SalesLT_SalesOrderHeader
+    public partial class SalesLT_SalesOrderHeader
     {
         public int SalesOrderId { get; set; } // SalesOrderID (Primary key)
         public byte RevisionNumber { get; set; } // RevisionNumber
@@ -18,7 +18,7 @@ namespace SampleDAL
         public DateTime? ShipDate { get; set; } // ShipDate
         public byte Status { get; set; } // Status
         public bool OnlineOrderFlag { get; set; } // OnlineOrderFlag
-        public string SalesOrderNumber { get; private set; } // SalesOrderNumber (length: 25)
+        public string SalesOrderNumber { get; set; } // SalesOrderNumber (length: 25)
         public string PurchaseOrderNumber { get; set; } // PurchaseOrderNumber (length: 25)
         public string AccountNumber { get; set; } // AccountNumber (length: 15)
         public int CustomerId { get; set; } // CustomerID
@@ -29,7 +29,7 @@ namespace SampleDAL
         public decimal SubTotal { get; set; } // SubTotal
         public decimal TaxAmt { get; set; } // TaxAmt
         public decimal Freight { get; set; } // Freight
-        public decimal TotalDue { get; private set; } // TotalDue
+        public decimal TotalDue { get; set; } // TotalDue
         public string Comment { get; set; } // Comment
         public Guid Rowguid { get; set; } // rowguid
         public DateTime ModifiedDate { get; set; } // ModifiedDate
@@ -60,17 +60,11 @@ namespace SampleDAL
 
         public SalesLT_SalesOrderHeader()
         {
-            RevisionNumber = 0;
-            OrderDate = DateTime.Now;
-            Status = 1;
-            OnlineOrderFlag = true;
-            SubTotal = 0.00m;
-            TaxAmt = 0.00m;
-            Freight = 0.00m;
-            Rowguid = Guid.NewGuid();
-            ModifiedDate = DateTime.Now;
             SalesLT_SalesOrderDetails = new List<SalesLT_SalesOrderDetail>();
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
 }

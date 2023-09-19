@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SampleDAL
 {
     // SalesOrderDetail
-    public class SalesLT_SalesOrderDetail
+    public partial class SalesLT_SalesOrderDetail
     {
         public int SalesOrderId { get; set; } // SalesOrderID (Primary key)
         public int SalesOrderDetailId { get; set; } // SalesOrderDetailID (Primary key)
@@ -17,7 +17,7 @@ namespace SampleDAL
         public int ProductId { get; set; } // ProductID
         public decimal UnitPrice { get; set; } // UnitPrice
         public decimal UnitPriceDiscount { get; set; } // UnitPriceDiscount
-        public decimal LineTotal { get; private set; } // LineTotal
+        public decimal LineTotal { get; set; } // LineTotal
         public Guid Rowguid { get; set; } // rowguid
         public DateTime ModifiedDate { get; set; } // ModifiedDate
 
@@ -35,10 +35,10 @@ namespace SampleDAL
 
         public SalesLT_SalesOrderDetail()
         {
-            UnitPriceDiscount = 0.0m;
-            Rowguid = Guid.NewGuid();
-            ModifiedDate = DateTime.Now;
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
 }

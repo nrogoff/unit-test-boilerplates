@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace SampleDAL
 {
     // SalesOrderHeader
-    public class SalesLT_SalesOrderHeaderConfiguration : IEntityTypeConfiguration<SalesLT_SalesOrderHeader>
+    public partial class SalesLT_SalesOrderHeaderConfiguration : IEntityTypeConfiguration<SalesLT_SalesOrderHeader>
     {
         public void Configure(EntityTypeBuilder<SalesLT_SalesOrderHeader> builder)
         {
@@ -21,7 +21,7 @@ namespace SampleDAL
             builder.Property(x => x.ShipDate).HasColumnName(@"ShipDate").HasColumnType("datetime").IsRequired(false);
             builder.Property(x => x.Status).HasColumnName(@"Status").HasColumnType("tinyint").IsRequired();
             builder.Property(x => x.OnlineOrderFlag).HasColumnName(@"OnlineOrderFlag").HasColumnType("bit").IsRequired();
-            builder.Property(x => x.SalesOrderNumber).HasColumnName(@"SalesOrderNumber").HasColumnType("nvarchar(25)").IsRequired().HasMaxLength(25).ValueGeneratedOnAddOrUpdate();
+            builder.Property(x => x.SalesOrderNumber).HasColumnName(@"SalesOrderNumber").HasColumnType("nvarchar(25)").IsRequired().HasMaxLength(25);
             builder.Property(x => x.PurchaseOrderNumber).HasColumnName(@"PurchaseOrderNumber").HasColumnType("nvarchar(25)").IsRequired(false).HasMaxLength(25);
             builder.Property(x => x.AccountNumber).HasColumnName(@"AccountNumber").HasColumnType("nvarchar(15)").IsRequired(false).HasMaxLength(15);
             builder.Property(x => x.CustomerId).HasColumnName(@"CustomerID").HasColumnType("int").IsRequired();
@@ -32,7 +32,7 @@ namespace SampleDAL
             builder.Property(x => x.SubTotal).HasColumnName(@"SubTotal").HasColumnType("money").IsRequired();
             builder.Property(x => x.TaxAmt).HasColumnName(@"TaxAmt").HasColumnType("money").IsRequired();
             builder.Property(x => x.Freight).HasColumnName(@"Freight").HasColumnType("money").IsRequired();
-            builder.Property(x => x.TotalDue).HasColumnName(@"TotalDue").HasColumnType("money").IsRequired().ValueGeneratedOnAddOrUpdate();
+            builder.Property(x => x.TotalDue).HasColumnName(@"TotalDue").HasColumnType("money").IsRequired();
             builder.Property(x => x.Comment).HasColumnName(@"Comment").HasColumnType("nvarchar(max)").IsRequired(false);
             builder.Property(x => x.Rowguid).HasColumnName(@"rowguid").HasColumnType("uniqueidentifier").IsRequired();
             builder.Property(x => x.ModifiedDate).HasColumnName(@"ModifiedDate").HasColumnType("datetime").IsRequired();
@@ -44,8 +44,14 @@ namespace SampleDAL
 
             builder.HasIndex(x => x.Rowguid).HasDatabaseName("AK_SalesOrderHeader_rowguid").IsUnique();
             builder.HasIndex(x => x.SalesOrderNumber).HasDatabaseName("AK_SalesOrderHeader_SalesOrderNumber").IsUnique();
+            builder.HasIndex(x => x.BillToAddressId).HasDatabaseName("IX_SalesOrderHeader_BillToAddressID");
             builder.HasIndex(x => x.CustomerId).HasDatabaseName("IX_SalesOrderHeader_CustomerID");
+            builder.HasIndex(x => x.ShipToAddressId).HasDatabaseName("IX_SalesOrderHeader_ShipToAddressID");
+
+            InitializePartial(builder);
         }
+
+        partial void InitializePartial(EntityTypeBuilder<SalesLT_SalesOrderHeader> builder);
     }
 
 }

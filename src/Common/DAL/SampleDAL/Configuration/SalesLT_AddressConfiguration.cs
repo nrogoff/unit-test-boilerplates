@@ -6,12 +6,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace SampleDAL
 {
-    // ****************************************************************************************************
-    // This is not a commercial licence, therefore only a few tables/views/stored procedures are generated.
-    // ****************************************************************************************************
-
     // Address
-    public class SalesLT_AddressConfiguration : IEntityTypeConfiguration<SalesLT_Address>
+    public partial class SalesLT_AddressConfiguration : IEntityTypeConfiguration<SalesLT_Address>
     {
         public void Configure(EntityTypeBuilder<SalesLT_Address> builder)
         {
@@ -31,7 +27,11 @@ namespace SampleDAL
             builder.HasIndex(x => x.Rowguid).HasDatabaseName("AK_Address_rowguid").IsUnique();
             builder.HasIndex(x => new { x.AddressLine1, x.AddressLine2, x.City, x.StateProvince, x.PostalCode, x.CountryRegion }).HasDatabaseName("IX_Address_AddressLine1_AddressLine2_City_StateProvince_PostalCode_CountryRegion");
             builder.HasIndex(x => x.StateProvince).HasDatabaseName("IX_Address_StateProvince");
+
+            InitializePartial(builder);
         }
+
+        partial void InitializePartial(EntityTypeBuilder<SalesLT_Address> builder);
     }
 
 }

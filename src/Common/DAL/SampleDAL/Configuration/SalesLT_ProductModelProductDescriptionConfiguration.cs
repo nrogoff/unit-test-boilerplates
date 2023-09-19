@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace SampleDAL
 {
     // ProductModelProductDescription
-    public class SalesLT_ProductModelProductDescriptionConfiguration : IEntityTypeConfiguration<SalesLT_ProductModelProductDescription>
+    public partial class SalesLT_ProductModelProductDescriptionConfiguration : IEntityTypeConfiguration<SalesLT_ProductModelProductDescription>
     {
         public void Configure(EntityTypeBuilder<SalesLT_ProductModelProductDescription> builder)
         {
@@ -25,7 +25,12 @@ namespace SampleDAL
             builder.HasOne(a => a.SalesLT_ProductModel).WithMany(b => b.SalesLT_ProductModelProductDescriptions).HasForeignKey(c => c.ProductModelId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ProductModelProductDescription_ProductModel_ProductModelID");
 
             builder.HasIndex(x => x.Rowguid).HasDatabaseName("AK_ProductModelProductDescription_rowguid").IsUnique();
+            builder.HasIndex(x => x.ProductDescriptionId).HasDatabaseName("IX_ProductModelProductDescription_ProductDescriptionID");
+
+            InitializePartial(builder);
         }
+
+        partial void InitializePartial(EntityTypeBuilder<SalesLT_ProductModelProductDescription> builder);
     }
 
 }

@@ -38,7 +38,7 @@ namespace SampleDAL
     //          }
     //      }
     //      Read more about it here: https://msdn.microsoft.com/en-us/data/dn314431.aspx
-    public class FakeDbSet<TEntity> :
+    public partial class FakeDbSet<TEntity> :
         DbSet<TEntity>,
         IQueryable<TEntity>,
         IAsyncEnumerable<TEntity>,
@@ -56,6 +56,7 @@ namespace SampleDAL
             _primaryKeys = null;
             _data        = new ObservableCollection<TEntity>();
             _query       = _data.AsQueryable();
+            InitializePartial();
         }
 
         public FakeDbSet(params string[] primaryKeys)
@@ -63,6 +64,7 @@ namespace SampleDAL
             _primaryKeys = typeof(TEntity).GetProperties().Where(x => primaryKeys.Contains(x.Name)).ToArray();
             _data        = new ObservableCollection<TEntity>();
             _query       = _data.AsQueryable();
+            InitializePartial();
         }
 
         public override TEntity Find(params object[] keyValues)
@@ -238,9 +240,11 @@ namespace SampleDAL
         {
             return Task.Factory.StartNew(() => ResetState());
         }
+
+        partial void InitializePartial();
     }
 
-    public class FakeDbAsyncQueryProvider<TEntity> : FakeQueryProvider<TEntity>, IAsyncEnumerable<TEntity>, IAsyncQueryProvider
+    public partial class FakeDbAsyncQueryProvider<TEntity> : FakeQueryProvider<TEntity>, IAsyncEnumerable<TEntity>, IAsyncQueryProvider
     {
         public FakeDbAsyncQueryProvider(Expression expression) : base(expression)
         {
@@ -270,7 +274,7 @@ namespace SampleDAL
         }
     }
 
-    public class FakeDbAsyncEnumerable<T> : EnumerableQuery<T>, IAsyncEnumerable<T>, IQueryable<T>
+    public partial class FakeDbAsyncEnumerable<T> : EnumerableQuery<T>, IAsyncEnumerable<T>, IQueryable<T>
     {
         public FakeDbAsyncEnumerable(IEnumerable<T> enumerable)
             : base(enumerable)
@@ -298,7 +302,7 @@ namespace SampleDAL
         }
     }
 
-    public class FakeDbAsyncEnumerator<T> : IAsyncEnumerator<T>
+    public partial class FakeDbAsyncEnumerator<T> : IAsyncEnumerator<T>
     {
         private readonly IEnumerator<T> _inner;
 
@@ -399,7 +403,7 @@ namespace SampleDAL
         }
     }
 
-    public class FakeExpressionVisitor : ExpressionVisitor
+    public partial class FakeExpressionVisitor : ExpressionVisitor
     {
     }
 

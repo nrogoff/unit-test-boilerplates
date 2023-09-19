@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SampleDAL
 {
     // CustomerAddress
-    public class SalesLT_CustomerAddress
+    public partial class SalesLT_CustomerAddress
     {
         public int CustomerId { get; set; } // CustomerID (Primary key)
         public int AddressId { get; set; } // AddressID (Primary key)
@@ -31,9 +31,10 @@ namespace SampleDAL
 
         public SalesLT_CustomerAddress()
         {
-            Rowguid = Guid.NewGuid();
-            ModifiedDate = DateTime.Now;
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
 }

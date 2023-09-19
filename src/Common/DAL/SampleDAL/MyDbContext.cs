@@ -14,19 +14,17 @@ using System.Threading.Tasks;
 
 namespace SampleDAL
 {
-    // ****************************************************************************************************
-    // This is not a commercial licence, therefore only a few tables/views/stored procedures are generated.
-    // ****************************************************************************************************
-
-    public class MyDbContext : DbContext, IMyDbContext
+    public partial class MyDbContext : DbContext, IMyDbContext
     {
         public MyDbContext()
         {
+            InitializePartial();
         }
 
         public MyDbContext(DbContextOptions<MyDbContext> options)
             : base(options)
         {
+            InitializePartial();
         }
 
         public DbSet<SalesLT_Address> SalesLT_Addresses { get; set; } // Address
@@ -44,7 +42,7 @@ namespace SampleDAL
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=aspnet-MvcMovie;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\Movies.mdf");
+                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EFUnitTestDb;Integrated Security=True;Encrypt=False;TrustServerCertificate=True");
             }
         }
 
@@ -74,41 +72,14 @@ namespace SampleDAL
             modelBuilder.ApplyConfiguration(new SalesLT_SalesOrderDetailConfiguration());
             modelBuilder.ApplyConfiguration(new SalesLT_SalesOrderHeaderConfiguration());
 
-            modelBuilder.Entity<SalesLT_SalesOrderDetail>().ToTable(tb => tb.HasTrigger("HasComputedColumn"));
-            modelBuilder.Entity<SalesLT_SalesOrderHeader>().ToTable(tb => tb.HasTrigger("HasComputedColumn"));
-
+            OnModelCreatingPartial(modelBuilder);
         }
 
 
-        // Stored Procedures
-        public int UspLogError(out int? errorLogId)
-        {
-            var errorLogIdParam = new SqlParameter { ParameterName = "@ErrorLogID", SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Output, Precision = 10, Scale = 0 };
-            var procResultParam = new SqlParameter { ParameterName = "@procResult", SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Output };
-
-            Database.ExecuteSqlRaw("EXEC @procResult = [dbo].[uspLogError] @ErrorLogID OUTPUT", errorLogIdParam, procResultParam);
-
-            if (IsSqlParameterNull(errorLogIdParam))
-                errorLogId = null;
-            else
-                errorLogId = (int) errorLogIdParam.Value;
-
-            return (int)procResultParam.Value;
-        }
-
-        // UspLogErrorAsync() cannot be created due to having out parameters, or is relying on the procedure result (int)
-
-        public int UspPrintError()
-        {
-            var procResultParam = new SqlParameter { ParameterName = "@procResult", SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Output };
-
-            Database.ExecuteSqlRaw("EXEC @procResult = [dbo].[uspPrintError] ", procResultParam);
-
-            return (int)procResultParam.Value;
-        }
-
-        // UspPrintErrorAsync() cannot be created due to having out parameters, or is relying on the procedure result (int)
-
+        partial void InitializePartial();
+        partial void DisposePartial(bool disposing);
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        static partial void OnCreateModelPartial(ModelBuilder modelBuilder, string schema);
     }
 }
 // </auto-generated>

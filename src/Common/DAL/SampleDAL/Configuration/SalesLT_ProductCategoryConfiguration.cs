@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace SampleDAL
 {
     // ProductCategory
-    public class SalesLT_ProductCategoryConfiguration : IEntityTypeConfiguration<SalesLT_ProductCategory>
+    public partial class SalesLT_ProductCategoryConfiguration : IEntityTypeConfiguration<SalesLT_ProductCategory>
     {
         public void Configure(EntityTypeBuilder<SalesLT_ProductCategory> builder)
         {
@@ -25,7 +25,12 @@ namespace SampleDAL
 
             builder.HasIndex(x => x.Name).HasDatabaseName("AK_ProductCategory_Name").IsUnique();
             builder.HasIndex(x => x.Rowguid).HasDatabaseName("AK_ProductCategory_rowguid").IsUnique();
+            builder.HasIndex(x => x.ParentProductCategoryId).HasDatabaseName("IX_ProductCategory_ParentProductCategoryID");
+
+            InitializePartial(builder);
         }
+
+        partial void InitializePartial(EntityTypeBuilder<SalesLT_ProductCategory> builder);
     }
 
 }

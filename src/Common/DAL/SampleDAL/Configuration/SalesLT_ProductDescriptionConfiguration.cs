@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace SampleDAL
 {
     // ProductDescription
-    public class SalesLT_ProductDescriptionConfiguration : IEntityTypeConfiguration<SalesLT_ProductDescription>
+    public partial class SalesLT_ProductDescriptionConfiguration : IEntityTypeConfiguration<SalesLT_ProductDescription>
     {
         public void Configure(EntityTypeBuilder<SalesLT_ProductDescription> builder)
         {
@@ -20,7 +20,11 @@ namespace SampleDAL
             builder.Property(x => x.ModifiedDate).HasColumnName(@"ModifiedDate").HasColumnType("datetime").IsRequired();
 
             builder.HasIndex(x => x.Rowguid).HasDatabaseName("AK_ProductDescription_rowguid").IsUnique();
+
+            InitializePartial(builder);
         }
+
+        partial void InitializePartial(EntityTypeBuilder<SalesLT_ProductDescription> builder);
     }
 
 }

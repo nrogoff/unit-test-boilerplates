@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace SampleDAL
 {
-    public class MyDbContextFactory : IDesignTimeDbContextFactory<MyDbContext>
+    public partial class MyDbContextFactory : IDesignTimeDbContextFactory<MyDbContext>
     {
         public MyDbContext CreateDbContext(string[] args)
         {

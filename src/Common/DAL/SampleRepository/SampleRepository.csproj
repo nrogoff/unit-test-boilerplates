@@ -7,15 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SampleDAL\SampleDAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.22" />
   </ItemGroup>
 
 </Project>

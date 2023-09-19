@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace SampleDAL
 {
     // SalesOrderDetail
-    public class SalesLT_SalesOrderDetailConfiguration : IEntityTypeConfiguration<SalesLT_SalesOrderDetail>
+    public partial class SalesLT_SalesOrderDetailConfiguration : IEntityTypeConfiguration<SalesLT_SalesOrderDetail>
     {
         public void Configure(EntityTypeBuilder<SalesLT_SalesOrderDetail> builder)
         {
@@ -20,7 +20,7 @@ namespace SampleDAL
             builder.Property(x => x.ProductId).HasColumnName(@"ProductID").HasColumnType("int").IsRequired();
             builder.Property(x => x.UnitPrice).HasColumnName(@"UnitPrice").HasColumnType("money").IsRequired();
             builder.Property(x => x.UnitPriceDiscount).HasColumnName(@"UnitPriceDiscount").HasColumnType("money").IsRequired();
-            builder.Property(x => x.LineTotal).HasColumnName(@"LineTotal").HasColumnType("numeric(38,6)").HasPrecision(38,6).IsRequired().ValueGeneratedOnAddOrUpdate();
+            builder.Property(x => x.LineTotal).HasColumnName(@"LineTotal").HasColumnType("numeric(38,6)").HasPrecision(38,6).IsRequired();
             builder.Property(x => x.Rowguid).HasColumnName(@"rowguid").HasColumnType("uniqueidentifier").IsRequired();
             builder.Property(x => x.ModifiedDate).HasColumnName(@"ModifiedDate").HasColumnType("datetime").IsRequired();
 
@@ -30,7 +30,11 @@ namespace SampleDAL
 
             builder.HasIndex(x => x.Rowguid).HasDatabaseName("AK_SalesOrderDetail_rowguid").IsUnique();
             builder.HasIndex(x => x.ProductId).HasDatabaseName("IX_SalesOrderDetail_ProductID");
+
+            InitializePartial(builder);
         }
+
+        partial void InitializePartial(EntityTypeBuilder<SalesLT_SalesOrderDetail> builder);
     }
 
 }

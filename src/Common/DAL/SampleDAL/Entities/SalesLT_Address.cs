@@ -8,12 +8,8 @@ using System.Threading.Tasks;
 
 namespace SampleDAL
 {
-    // ****************************************************************************************************
-    // This is not a commercial licence, therefore only a few tables/views/stored procedures are generated.
-    // ****************************************************************************************************
-
     // Address
-    public class SalesLT_Address
+    public partial class SalesLT_Address
     {
         public int AddressId { get; set; } // AddressID (Primary key)
         public string AddressLine1 { get; set; } // AddressLine1 (length: 60)
@@ -44,12 +40,13 @@ namespace SampleDAL
 
         public SalesLT_Address()
         {
-            Rowguid = Guid.NewGuid();
-            ModifiedDate = DateTime.Now;
             SalesLT_CustomerAddresses = new List<SalesLT_CustomerAddress>();
             SalesLT_SalesOrderHeaders_BillToAddressId = new List<SalesLT_SalesOrderHeader>();
             SalesLT_SalesOrderHeaders_ShipToAddressId = new List<SalesLT_SalesOrderHeader>();
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
 }

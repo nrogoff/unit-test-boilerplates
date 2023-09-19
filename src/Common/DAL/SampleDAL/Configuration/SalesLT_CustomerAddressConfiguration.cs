@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace SampleDAL
 {
     // CustomerAddress
-    public class SalesLT_CustomerAddressConfiguration : IEntityTypeConfiguration<SalesLT_CustomerAddress>
+    public partial class SalesLT_CustomerAddressConfiguration : IEntityTypeConfiguration<SalesLT_CustomerAddress>
     {
         public void Configure(EntityTypeBuilder<SalesLT_CustomerAddress> builder)
         {
@@ -25,7 +25,12 @@ namespace SampleDAL
             builder.HasOne(a => a.SalesLT_Customer).WithMany(b => b.SalesLT_CustomerAddresses).HasForeignKey(c => c.CustomerId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_CustomerAddress_Customer_CustomerID");
 
             builder.HasIndex(x => x.Rowguid).HasDatabaseName("AK_CustomerAddress_rowguid").IsUnique();
+            builder.HasIndex(x => x.AddressId).HasDatabaseName("IX_CustomerAddress_AddressID");
+
+            InitializePartial(builder);
         }
+
+        partial void InitializePartial(EntityTypeBuilder<SalesLT_CustomerAddress> builder);
     }
 
 }

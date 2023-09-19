@@ -14,11 +14,7 @@ using System.Threading.Tasks;
 
 namespace SampleDAL
 {
-    // ****************************************************************************************************
-    // This is not a commercial licence, therefore only a few tables/views/stored procedures are generated.
-    // ****************************************************************************************************
-
-    public class FakeMyDbContext : IMyDbContext
+    public partial class FakeMyDbContext : IMyDbContext
     {
         public DbSet<SalesLT_Address> SalesLT_Addresses { get; set; } // Address
         public DbSet<SalesLT_Customer> SalesLT_Customers { get; set; } // Customer
@@ -46,6 +42,7 @@ namespace SampleDAL
             SalesLT_SalesOrderDetails = new FakeDbSet<SalesLT_SalesOrderDetail>("SalesOrderId", "SalesOrderDetailId");
             SalesLT_SalesOrderHeaders = new FakeDbSet<SalesLT_SalesOrderHeader>("SalesOrderId");
 
+            InitializePartial();
         }
 
         public int SaveChangesCount { get; private set; }
@@ -70,6 +67,8 @@ namespace SampleDAL
             ++SaveChangesCount;
             return Task<int>.Factory.StartNew(x => 1, acceptAllChangesOnSuccess, cancellationToken);
         }
+
+        partial void InitializePartial();
 
         protected virtual void Dispose(bool disposing)
         {
@@ -241,23 +240,6 @@ namespace SampleDAL
             throw new NotImplementedException();
         }
 
-
-        // Stored Procedures
-
-        public int UspLogError(out int? errorLogId)
-        {
-            errorLogId = default(int);
-            return 0;
-        }
-
-        // UspLogErrorAsync() cannot be created due to having out parameters, or is relying on the procedure result (int)
-
-        public int UspPrintError()
-        {
-            return 0;
-        }
-
-        // UspPrintErrorAsync() cannot be created due to having out parameters, or is relying on the procedure result (int)
     }
 }
 // </auto-generated>

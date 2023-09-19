@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace SampleDAL
 {
     // Customer
-    public class SalesLT_CustomerConfiguration : IEntityTypeConfiguration<SalesLT_Customer>
+    public partial class SalesLT_CustomerConfiguration : IEntityTypeConfiguration<SalesLT_Customer>
     {
         public void Configure(EntityTypeBuilder<SalesLT_Customer> builder)
         {
@@ -32,7 +32,11 @@ namespace SampleDAL
 
             builder.HasIndex(x => x.Rowguid).HasDatabaseName("AK_Customer_rowguid").IsUnique();
             builder.HasIndex(x => x.EmailAddress).HasDatabaseName("IX_Customer_EmailAddress");
+
+            InitializePartial(builder);
         }
+
+        partial void InitializePartial(EntityTypeBuilder<SalesLT_Customer> builder);
     }
 
 }

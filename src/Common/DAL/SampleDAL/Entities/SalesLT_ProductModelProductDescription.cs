@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SampleDAL
 {
     // ProductModelProductDescription
-    public class SalesLT_ProductModelProductDescription
+    public partial class SalesLT_ProductModelProductDescription
     {
         public int ProductModelId { get; set; } // ProductModelID (Primary key)
         public int ProductDescriptionId { get; set; } // ProductDescriptionID (Primary key)
@@ -31,9 +31,10 @@ namespace SampleDAL
 
         public SalesLT_ProductModelProductDescription()
         {
-            Rowguid = Guid.NewGuid();
-            ModifiedDate = DateTime.Now;
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
 }

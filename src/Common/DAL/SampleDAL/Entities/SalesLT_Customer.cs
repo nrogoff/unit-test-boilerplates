@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SampleDAL
 {
     // Customer
-    public class SalesLT_Customer
+    public partial class SalesLT_Customer
     {
         public int CustomerId { get; set; } // CustomerID (Primary key)
         public bool NameStyle { get; set; } // NameStyle
@@ -41,12 +41,12 @@ namespace SampleDAL
 
         public SalesLT_Customer()
         {
-            NameStyle = false;
-            Rowguid = Guid.NewGuid();
-            ModifiedDate = DateTime.Now;
             SalesLT_CustomerAddresses = new List<SalesLT_CustomerAddress>();
             SalesLT_SalesOrderHeaders = new List<SalesLT_SalesOrderHeader>();
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
 }

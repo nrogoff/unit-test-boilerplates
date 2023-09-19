@@ -7,15 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.10" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="SampleDAL.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SampleDAL.cs</LastGenOutput>
-    </None>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.22" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.22" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +21,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>SampleDAL.tt</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SampleDAL.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SampleDAL.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

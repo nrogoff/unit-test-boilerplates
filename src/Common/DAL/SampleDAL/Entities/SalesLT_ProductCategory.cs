@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SampleDAL
 {
     // ProductCategory
-    public class SalesLT_ProductCategory
+    public partial class SalesLT_ProductCategory
     {
         public int ProductCategoryId { get; set; } // ProductCategoryID (Primary key)
         public int? ParentProductCategoryId { get; set; } // ParentProductCategoryID
@@ -38,11 +38,12 @@ namespace SampleDAL
 
         public SalesLT_ProductCategory()
         {
-            Rowguid = Guid.NewGuid();
-            ModifiedDate = DateTime.Now;
             SalesLT_Products = new List<SalesLT_Product>();
             SalesLT_ProductCategories = new List<SalesLT_ProductCategory>();
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
 }

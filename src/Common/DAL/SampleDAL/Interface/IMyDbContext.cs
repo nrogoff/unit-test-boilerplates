@@ -14,11 +14,7 @@ using System.Threading.Tasks;
 
 namespace SampleDAL
 {
-    // ****************************************************************************************************
-    // This is not a commercial licence, therefore only a few tables/views/stored procedures are generated.
-    // ****************************************************************************************************
-
-    public interface IMyDbContext : IDisposable
+    public partial interface IMyDbContext : IDisposable
     {
         DbSet<SalesLT_Address> SalesLT_Addresses { get; set; } // Address
         DbSet<SalesLT_Customer> SalesLT_Customers { get; set; } // Customer
@@ -74,14 +70,6 @@ namespace SampleDAL
         void UpdateRange(params object[] entities);
 
         IQueryable<TResult> FromExpression<TResult> (Expression<Func<IQueryable<TResult>>> expression);
-
-        // Stored Procedures
-        int UspLogError(out int? errorLogId);
-        // UspLogErrorAsync() cannot be created due to having out parameters, or is relying on the procedure result (int)
-
-        int UspPrintError();
-        // UspPrintErrorAsync() cannot be created due to having out parameters, or is relying on the procedure result (int)
-
     }
 }
 // </auto-generated>
