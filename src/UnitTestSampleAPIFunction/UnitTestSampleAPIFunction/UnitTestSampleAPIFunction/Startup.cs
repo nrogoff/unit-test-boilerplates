@@ -45,6 +45,9 @@ namespace UnitTestSampleAPIFunction
             // Add the HttpClient to the collection of services. This is used to consume other APIs.
             //builder.Services.AddHttpClient();
 
+            // Add AutoMapper to the collection of services
+            builder.Services.AddAutoMapper(typeof(Startup));
+
             // Add the dbContext to the collection of services
             // The 'AddDbContext' method ensures that only one instance of the DbContext is created and shared throughout the lifetime of the application, improving performance and reducing the likelihood of concurrency issues.
             builder.Services.AddDbContext<MyDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("SqlConnectionString")));

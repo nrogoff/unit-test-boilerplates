@@ -4,6 +4,9 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
@@ -15,7 +18,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Logging;
-using SampleDAL;
 using SampleRepository.Repositories;
 
 namespace UnitTestSampleAPIFunction.Functions
@@ -25,17 +27,20 @@ namespace UnitTestSampleAPIFunction.Functions
         private ILogger _logger;
         private readonly IConfiguration _config;
         private readonly ICustomerRepository _customerRepository;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="config">The Configuration object injected by the host</param>
-        /// <param name="customerRepository"></param>
-        public GetCustomers(IConfiguration config, ICustomerRepository customerRepository)
+        /// <param name="customerRepository">The Customer Repository</param>
+        /// <param name="mapper">AutoMapper Service</param>
+        public GetCustomers(IConfiguration config, ICustomerRepository customerRepository, IMapper mapper)
         {
             // _logger = log;
             _config = config;
             _customerRepository = customerRepository;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -172,42 +177,22 @@ namespace UnitTestSampleAPIFunction.Functions
 
             try
             {
-                var response = new
+                var response = new CustomerListDto
                 {
                     TotalCount = await _customerRepository.CountCustomers(filter).CountAsync(),
-                    Customers = await _customerRepository.GetCustomers(top, skip, filter, orderBy).ToListAsync(),
+                    Customers = await _customerRepository.GetCustomers(top, skip, filter, orderBy).ProjectTo<CustomerDto>(_mapper.ConfigurationProvider).ToListAsync(),
                     NextLink = "coming soon"
                 };
                 return new OkObjectResult(response);
             }
             catch (Exception e)
             {
+                // Log the error and return an Internal Server Error (500)
                 _logger.LogError(eventId, e, "Error getting customers", logProps);
                 return new InternalServerErrorResult();
             }
             
             #endregion
         }
-    }
-
-    /// <summary>
-    /// Data Transfer Object (DTO) for Customer List Response
-    /// </summary>
-    public class CustomerListDto
-    {
-        /// <summary>
-        /// Total count of records in the result set
-        /// </summary>
-        public int TotalCount { get; set; }
-
-        /// <summary>
-        /// List of Customers in this page
-        /// </summary>
-        public List<SalesLT_Customer> Customers { get; set; }
-
-        /// <summary>
-        /// Link to the next page
-        /// </summary>
-        public string NextLink { get; set; }
     }
 }

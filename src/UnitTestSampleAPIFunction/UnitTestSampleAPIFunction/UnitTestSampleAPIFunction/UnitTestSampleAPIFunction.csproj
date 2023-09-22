@@ -6,12 +6,15 @@
     <Title>Nicks Unit Test Sample API Function</Title>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.OpenApi" Version="1.5.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.4" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.2.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Contracts\Contracts.csproj" />
     <ProjectReference Include="..\..\..\Common\DAL\SampleDAL\SampleDAL.csproj" />
     <ProjectReference Include="..\..\..\Common\DAL\SampleRepository\SampleRepository.csproj" />
   </ItemGroup>
