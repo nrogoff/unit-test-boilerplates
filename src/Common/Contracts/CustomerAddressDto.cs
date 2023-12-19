@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Abstractions;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Abstractions;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Resolvers;
 using Newtonsoft.Json.Serialization;
@@ -11,28 +12,36 @@ namespace Contracts;
 [OpenApiExample(typeof(CustomerAddressDtoExample))]
 public class CustomerAddressDto
 {
+
     [OpenApiProperty(Description = "Customer Address Type")]
+    [StringLength(50)]
     public string AddressType { get; set; } // AddressType (length: 50)
 
     [OpenApiProperty(Description = "Customer Unique Address ID")]
     public int AddressId { get; set; } // AddressID (Primary key)
 
     [OpenApiProperty(Description = "Address Line 1")]
+    [StringLength(60)]
     public string AddressLine1 { get; set; } // AddressLine1 (length: 60)
 
     [OpenApiProperty(Description = "Address Line 2")]
-    public string AddressLine2 { get; set; } // AddressLine2 (length: 60)
+    [StringLength(60)]
+    public string? AddressLine2 { get; set; } // AddressLine2 (length: 60)
 
     [OpenApiProperty(Description = "City")]
+    [StringLength(30)]
     public string City { get; set; } // City (length: 30)
 
     [OpenApiProperty(Description = "State or Province")]
+    [StringLength(50)]
     public string StateProvince { get; set; } // StateProvince (length: 50)
 
     [OpenApiProperty(Description = "Country or Region")]
+    [StringLength(50)]
     public string CountryRegion { get; set; } // CountryRegion (length: 50)
 
     [OpenApiProperty(Description = "Postal Code")]
+    [StringLength(15)]
     public string PostalCode { get; set; } // PostalCode (length: 15)
 
 }

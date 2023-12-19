@@ -22,12 +22,12 @@ namespace SampleDAL
         /// <summary>
         /// Parent SalesLT_ProductDescription pointed by [ProductModelProductDescription].([ProductDescriptionId]) (FK_ProductModelProductDescription_ProductDescription_ProductDescriptionID)
         /// </summary>
-        public SalesLT_ProductDescription SalesLT_ProductDescription { get; set; } // FK_ProductModelProductDescription_ProductDescription_ProductDescriptionID
+        public virtual SalesLT_ProductDescription SalesLT_ProductDescription { get; set; } // FK_ProductModelProductDescription_ProductDescription_ProductDescriptionID
 
         /// <summary>
         /// Parent SalesLT_ProductModel pointed by [ProductModelProductDescription].([ProductModelId]) (FK_ProductModelProductDescription_ProductModel_ProductModelID)
         /// </summary>
-        public SalesLT_ProductModel SalesLT_ProductModel { get; set; } // FK_ProductModelProductDescription_ProductModel_ProductModelID
+        public virtual SalesLT_ProductModel SalesLT_ProductModel { get; set; } // FK_ProductModelProductDescription_ProductModel_ProductModelID
 
         public SalesLT_ProductModelProductDescription()
         {

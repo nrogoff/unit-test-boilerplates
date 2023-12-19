@@ -32,12 +32,12 @@ namespace SampleDAL
         /// <summary>
         /// Child SalesLT_CustomerAddresses where [CustomerAddress].[CustomerID] point to this entity (FK_CustomerAddress_Customer_CustomerID)
         /// </summary>
-        public ICollection<SalesLT_CustomerAddress> SalesLT_CustomerAddresses { get; set; } // CustomerAddress.FK_CustomerAddress_Customer_CustomerID
+        public virtual ICollection<SalesLT_CustomerAddress> SalesLT_CustomerAddresses { get; set; } // CustomerAddress.FK_CustomerAddress_Customer_CustomerID
 
         /// <summary>
         /// Child SalesLT_SalesOrderHeaders where [SalesOrderHeader].[CustomerID] point to this entity (FK_SalesOrderHeader_Customer_CustomerID)
         /// </summary>
-        public ICollection<SalesLT_SalesOrderHeader> SalesLT_SalesOrderHeaders { get; set; } // SalesOrderHeader.FK_SalesOrderHeader_Customer_CustomerID
+        public virtual ICollection<SalesLT_SalesOrderHeader> SalesLT_SalesOrderHeaders { get; set; } // SalesOrderHeader.FK_SalesOrderHeader_Customer_CustomerID
 
         public SalesLT_Customer()
         {

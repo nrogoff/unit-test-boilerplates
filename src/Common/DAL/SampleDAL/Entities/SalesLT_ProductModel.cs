@@ -22,12 +22,12 @@ namespace SampleDAL
         /// <summary>
         /// Child SalesLT_Products where [Product].[ProductModelID] point to this entity (FK_Product_ProductModel_ProductModelID)
         /// </summary>
-        public ICollection<SalesLT_Product> SalesLT_Products { get; set; } // Product.FK_Product_ProductModel_ProductModelID
+        public virtual ICollection<SalesLT_Product> SalesLT_Products { get; set; } // Product.FK_Product_ProductModel_ProductModelID
 
         /// <summary>
         /// Child SalesLT_ProductModelProductDescriptions where [ProductModelProductDescription].[ProductModelID] point to this entity (FK_ProductModelProductDescription_ProductModel_ProductModelID)
         /// </summary>
-        public ICollection<SalesLT_ProductModelProductDescription> SalesLT_ProductModelProductDescriptions { get; set; } // ProductModelProductDescription.FK_ProductModelProductDescription_ProductModel_ProductModelID
+        public virtual ICollection<SalesLT_ProductModelProductDescription> SalesLT_ProductModelProductDescriptions { get; set; } // ProductModelProductDescription.FK_ProductModelProductDescription_ProductModel_ProductModelID
 
         public SalesLT_ProductModel()
         {

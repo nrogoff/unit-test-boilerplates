@@ -43,6 +43,7 @@ namespace SampleDAL
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EFUnitTestDb;Integrated Security=True;Encrypt=False;TrustServerCertificate=True");
+                optionsBuilder.UseLazyLoadingProxies();
             }
         }
 

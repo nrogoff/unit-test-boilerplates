@@ -26,12 +26,12 @@ namespace SampleDAL
         /// <summary>
         /// Parent SalesLT_Product pointed by [SalesOrderDetail].([ProductId]) (FK_SalesOrderDetail_Product_ProductID)
         /// </summary>
-        public SalesLT_Product SalesLT_Product { get; set; } // FK_SalesOrderDetail_Product_ProductID
+        public virtual SalesLT_Product SalesLT_Product { get; set; } // FK_SalesOrderDetail_Product_ProductID
 
         /// <summary>
         /// Parent SalesLT_SalesOrderHeader pointed by [SalesOrderDetail].([SalesOrderId]) (FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID)
         /// </summary>
-        public SalesLT_SalesOrderHeader SalesLT_SalesOrderHeader { get; set; } // FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID
+        public virtual SalesLT_SalesOrderHeader SalesLT_SalesOrderHeader { get; set; } // FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID
 
         public SalesLT_SalesOrderDetail()
         {

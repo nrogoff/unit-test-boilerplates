@@ -22,5 +22,4 @@ public class MappingProfile : Profile
         // Create a mapping from SalesLT_Address to CustomerAddressDto
         CreateMap<SalesLT_Address, CustomerAddressDto>(MemberList.None);
     }
-    
 }

@@ -34,19 +34,19 @@ namespace SampleDAL
         /// <summary>
         /// Child SalesLT_SalesOrderDetails where [SalesOrderDetail].[ProductID] point to this entity (FK_SalesOrderDetail_Product_ProductID)
         /// </summary>
-        public ICollection<SalesLT_SalesOrderDetail> SalesLT_SalesOrderDetails { get; set; } // SalesOrderDetail.FK_SalesOrderDetail_Product_ProductID
+        public virtual ICollection<SalesLT_SalesOrderDetail> SalesLT_SalesOrderDetails { get; set; } // SalesOrderDetail.FK_SalesOrderDetail_Product_ProductID
 
         // Foreign keys
 
         /// <summary>
         /// Parent SalesLT_ProductCategory pointed by [Product].([ProductCategoryId]) (FK_Product_ProductCategory_ProductCategoryID)
         /// </summary>
-        public SalesLT_ProductCategory SalesLT_ProductCategory { get; set; } // FK_Product_ProductCategory_ProductCategoryID
+        public virtual SalesLT_ProductCategory SalesLT_ProductCategory { get; set; } // FK_Product_ProductCategory_ProductCategoryID
 
         /// <summary>
         /// Parent SalesLT_ProductModel pointed by [Product].([ProductModelId]) (FK_Product_ProductModel_ProductModelID)
         /// </summary>
-        public SalesLT_ProductModel SalesLT_ProductModel { get; set; } // FK_Product_ProductModel_ProductModelID
+        public virtual SalesLT_ProductModel SalesLT_ProductModel { get; set; } // FK_Product_ProductModel_ProductModelID
 
         public SalesLT_Product()
         {

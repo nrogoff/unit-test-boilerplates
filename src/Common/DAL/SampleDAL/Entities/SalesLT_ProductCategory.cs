@@ -22,19 +22,19 @@ namespace SampleDAL
         /// <summary>
         /// Child SalesLT_Products where [Product].[ProductCategoryID] point to this entity (FK_Product_ProductCategory_ProductCategoryID)
         /// </summary>
-        public ICollection<SalesLT_Product> SalesLT_Products { get; set; } // Product.FK_Product_ProductCategory_ProductCategoryID
+        public virtual ICollection<SalesLT_Product> SalesLT_Products { get; set; } // Product.FK_Product_ProductCategory_ProductCategoryID
 
         /// <summary>
         /// Child SalesLT_ProductCategories where [ProductCategory].[ParentProductCategoryID] point to this entity (FK_ProductCategory_ProductCategory_ParentProductCategoryID_ProductCategoryID)
         /// </summary>
-        public ICollection<SalesLT_ProductCategory> SalesLT_ProductCategories { get; set; } // ProductCategory.FK_ProductCategory_ProductCategory_ParentProductCategoryID_ProductCategoryID
+        public virtual ICollection<SalesLT_ProductCategory> SalesLT_ProductCategories { get; set; } // ProductCategory.FK_ProductCategory_ProductCategory_ParentProductCategoryID_ProductCategoryID
 
         // Foreign keys
 
         /// <summary>
         /// Parent SalesLT_ProductCategory pointed by [ProductCategory].([ParentProductCategoryId]) (FK_ProductCategory_ProductCategory_ParentProductCategoryID_ProductCategoryID)
         /// </summary>
-        public SalesLT_ProductCategory ParentProductCategory { get; set; } // FK_ProductCategory_ProductCategory_ParentProductCategoryID_ProductCategoryID
+        public virtual SalesLT_ProductCategory ParentProductCategory { get; set; } // FK_ProductCategory_ProductCategory_ParentProductCategoryID_ProductCategoryID
 
         public SalesLT_ProductCategory()
         {

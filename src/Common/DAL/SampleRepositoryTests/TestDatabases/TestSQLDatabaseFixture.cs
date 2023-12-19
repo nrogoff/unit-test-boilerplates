@@ -11,7 +11,7 @@ namespace SampleRepositoryTests.TestDatabases;
 /// </summary>
 public class TestSqlDatabaseFixture
 {
-    private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=EFUnitTestDb;Trusted_Connection=True";
+    private const string ConnectionString = @"Server=(localdb)\MSSQLLocalDB;Database=EFUnitTestDb;Trusted_Connection=True";
 
     private static readonly object _lock = new();
     private static bool _databaseInitialized;
@@ -62,6 +62,7 @@ public class TestSqlDatabaseFixture
 
         // Create a Bogus Faker for Address
         var addressFaker = new Faker<SalesLT_Address>()
+            .RuleFor(a => a.Rowguid, f => Guid.NewGuid())
             .RuleFor(a => a.AddressLine1, f => f.Address.StreetAddress())
             .RuleFor(a => a.AddressLine2, f => f.Address.SecondaryAddress().OrNull(f, 0.5F))
             .RuleFor(a => a.City, f => f.Address.City())
@@ -71,9 +72,12 @@ public class TestSqlDatabaseFixture
             .RuleFor(a => a.ModifiedDate, f => f.Date.Past());
 
         var addressList = addressFaker.Generate(50);
+        context.SalesLT_Addresses.AddRange(addressList);
+        context.SaveChanges();
 
         // Create a Bogus Faker for CustomerAddress
         var customerAddressFaker = new Faker<SalesLT_CustomerAddress>()
+            .RuleFor(c => c.Rowguid, f => Guid.NewGuid())
             .RuleFor(c => c.AddressType, f => f.PickRandomParam("Home", "Work", "Other"))
             .RuleFor(c => c.ModifiedDate, f => f.Date.Past())
             //add a rule to generate a random address
@@ -81,6 +85,7 @@ public class TestSqlDatabaseFixture
 
         // Create a Bogus Faker for Customer
         var customerFaker = new Faker<SalesLT_Customer>()
+            .RuleFor(c => c.Rowguid, f => Guid.NewGuid())
             .RuleFor(c => c.Title, f => f.Name.Prefix().OrNull(f, 0.2F))
             .RuleFor(c => c.FirstName, f => f.Person.FirstName)
             .RuleFor(c => c.MiddleName, f => f.Name.FirstName().OrNull(f, 0.5F))
@@ -95,11 +100,8 @@ public class TestSqlDatabaseFixture
             .RuleFor(c => c.Phone, f => f.Phone.PhoneNumber())
             .RuleFor(c => c.SalesPerson, f => f.Person.FullName)
             .RuleFor(c => c.SalesLT_CustomerAddresses, f => customerAddressFaker.Generate(1).OrNull(f, 0.1F));
-
         var customersList = customerFaker.Generate(500);
-
         context.SalesLT_Customers.AddRange(customersList);
-
         context.SaveChanges();
     }
 
@@ -119,16 +121,17 @@ public class TestSqlDatabaseFixture
         // Create the top level Product Categories
         var productCategoryList = new List<SalesLT_ProductCategory>
         {
-            new SalesLT_ProductCategory { Name = "Bikes", ModifiedDate = DateTime.Now },
-            new SalesLT_ProductCategory { Name = "Components", ModifiedDate = DateTime.Now },
-            new SalesLT_ProductCategory { Name = "Clothing", ModifiedDate = DateTime.Now },
-            new SalesLT_ProductCategory { Name = "Accessories", ModifiedDate = DateTime.Now }
+            new SalesLT_ProductCategory { Name = "Bikes", ModifiedDate = DateTime.Now, Rowguid = Guid.NewGuid()},
+            new SalesLT_ProductCategory { Name = "Components", ModifiedDate = DateTime.Now, Rowguid = Guid.NewGuid() },
+            new SalesLT_ProductCategory { Name = "Clothing", ModifiedDate = DateTime.Now, Rowguid = Guid.NewGuid() },
+            new SalesLT_ProductCategory { Name = "Accessories", ModifiedDate = DateTime.Now, Rowguid = Guid.NewGuid() }
         };
         context.SalesLT_ProductCategories.AddRange(productCategoryList);
         context.SaveChanges();
 
         // Create a Bogus Faker for Product Category 2nd level
         var productCategoryFaker = new Faker<SalesLT_ProductCategory>()
+            .RuleFor(c => c.Rowguid, f => Guid.NewGuid())
             .RuleFor(c => c.Name, f => f.Commerce.Categories(1).First())
             .RuleFor(c => c.ParentProductCategory, f => f.PickRandom(context.SalesLT_ProductCategories.ToList()))
             .RuleFor(c => c.ModifiedDate, f => f.Date.Past());
@@ -136,22 +139,26 @@ public class TestSqlDatabaseFixture
 
         // Create a Bogus Faker for Product Model
         var productModelFaker = new Faker<SalesLT_ProductModel>()
+            .RuleFor(m => m.Rowguid, f => Guid.NewGuid())
             .RuleFor(m => m.Name, f => f.Commerce.ProductName())
             .RuleFor(m => m.CatalogDescription, f => f.Lorem.Paragraph())
             .RuleFor(m => m.ModifiedDate, f => f.Date.Past());
         var productModelList = productModelFaker.Generate(40);
 
         var productDescriptionFaker = new Faker<SalesLT_ProductDescription>()
+            .RuleFor(d => d.Rowguid, f => Guid.NewGuid())
             .RuleFor(d => d.Description, f => f.Lorem.Paragraph())
             .RuleFor(d => d.ModifiedDate, f => f.Date.Past());
         var productDescriptionList = productDescriptionFaker.Generate(40);
 
         var productDescriptionDeFaker = new Faker<SalesLT_ProductDescription>("de")
+            .RuleFor(d => d.Rowguid, f => Guid.NewGuid())
             .RuleFor(d => d.Description, f => f.Lorem.Paragraph())
             .RuleFor(d => d.ModifiedDate, f => f.Date.Past());
         var productDescriptionDeList = productDescriptionFaker.Generate(40);
 
         var productModelProductDescriptionFaker = new Faker<SalesLT_ProductModelProductDescription>()
+            .RuleFor(m => m.Rowguid, f => Guid.NewGuid())
             .RuleFor(m => m.SalesLT_ProductModel, f => f.PickRandom(productModelList))
             .RuleFor(m => m.SalesLT_ProductDescription, f => f.PickRandom(productDescriptionList))
             .RuleFor(m => m.Culture, f => f.PickRandomParam("en", "fr", "es", "ja", "zh", "ru", "sv", "nl", "it", "pl", "fi", "da", "el", "no", "pt", "ar", "tr", "he", "id", "hu", "cs", "ko", "th", "ca", "vi", "ro", "sk", "uk", "hr", "hi", "lt", "sl", "bg", "sr", "et", "lv", "fa", "bs", "is", "mk", "ms", "sw", "sq", "cy", "ur", "eu", "ga", "hy", "kk", "ku", "mi", "mt", "qu", "te", "be", "tg", "tk", "uz", "xh", "am", "az", "bn", "bo", "dz", "gl", "gu", "ha", "ig", "kn", "km", "lo", "mn", "ne", "or", "pa", "rw", "si", "so", "ti", "ug", "wo", "yo", "zu").OrNull(f, 0.1F))
@@ -161,6 +168,7 @@ public class TestSqlDatabaseFixture
         context.SaveChanges();
 
         var productModelProductDescriptionDeFaker = new Faker<SalesLT_ProductModelProductDescription>()
+            .RuleFor(m => m.Rowguid, f => Guid.NewGuid())
             .RuleFor(m => m.SalesLT_ProductModel, f => f.PickRandom(productModelList))
             .RuleFor(m => m.SalesLT_ProductDescription, f => f.PickRandom(productDescriptionDeList))
             .RuleFor(m => m.Culture, f => f.PickRandomParam("de").OrNull(f, 0.1F))
@@ -171,6 +179,7 @@ public class TestSqlDatabaseFixture
 
         // Create a Bogus Faker for Product
         var productFaker = new Faker<SalesLT_Product>()
+            .RuleFor(p => p.Rowguid, f => Guid.NewGuid())
             .RuleFor(p => p.Name, f => f.Commerce.ProductName())
             .RuleFor(p => p.ProductNumber, f => f.Commerce.Ean13())
             .RuleFor(p => p.Color, f => f.Commerce.Color())

@@ -18,7 +18,7 @@ namespace SampleRepositoryTests
         public async Task GetAllRecords_Customers_Expect500()
         {
             // Arrange
-            using var context = Fixture.CreateContext();
+            await using var context = Fixture.CreateContext();
             var customerRepository = new CustomerRepository(context);
 
             // Act
@@ -27,6 +27,20 @@ namespace SampleRepositoryTests
             // Assert
             customers.Should().NotBeNull();
             customers.Should().HaveCount(500);
+        }
+
+        [Fact]
+        public async Task Count_Customers_Expect500()
+        {
+            // Arrange
+            await using var context = Fixture.CreateContext();
+            var customerRepository = new CustomerRepository(context);
+
+            // Act
+            var countCustomers =  await customerRepository.CountCustomers("s");
+
+            // Assert
+            countCustomers.Should().Be(166);
         }
     }
 }

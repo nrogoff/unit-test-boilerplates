@@ -1,4 +1,5 @@
-﻿using SampleDAL;
+﻿using Microsoft.EntityFrameworkCore;
+using SampleDAL;
 using SampleRepository.Common;
 
 namespace SampleRepository.Repositories;
@@ -22,7 +23,7 @@ public class CustomerRepository : RepositoryBase<SalesLT_Customer, MyDbContext>,
     /// <param name="filter">A term to wildcard search on LastName</param>
     /// <param name="orderBy">IGNORED for simplicity</param>
     /// <returns>An IQueryable List of Customers</returns>
-    public IQueryable<SalesLT_Customer> GetCustomers(int top, int skip, string filter, string orderBy)
+    public  IQueryable<SalesLT_Customer> GetCustomers(int top, int skip, string filter, string orderBy)
     {
         return Context.SalesLT_Customers
             .Where(c => c.LastName.Contains(filter))
@@ -36,9 +37,8 @@ public class CustomerRepository : RepositoryBase<SalesLT_Customer, MyDbContext>,
     /// </summary>
     /// <param name="filter">A term wildcard search on LastName</param>
     /// <returns></returns>
-    public IQueryable<SalesLT_Customer> CountCustomers(string filter)
+    public async Task<int> CountCustomers(string filter)
     {
-        return Context.SalesLT_Customers
-            .Where(c => c.LastName.Contains(filter));
+        return await Context.SalesLT_Customers.CountAsync(c => c.LastName.Contains(filter));
     }
 }

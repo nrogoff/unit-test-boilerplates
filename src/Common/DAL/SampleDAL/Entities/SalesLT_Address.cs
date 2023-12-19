@@ -26,17 +26,17 @@ namespace SampleDAL
         /// <summary>
         /// Child SalesLT_CustomerAddresses where [CustomerAddress].[AddressID] point to this entity (FK_CustomerAddress_Address_AddressID)
         /// </summary>
-        public ICollection<SalesLT_CustomerAddress> SalesLT_CustomerAddresses { get; set; } // CustomerAddress.FK_CustomerAddress_Address_AddressID
+        public virtual ICollection<SalesLT_CustomerAddress> SalesLT_CustomerAddresses { get; set; } // CustomerAddress.FK_CustomerAddress_Address_AddressID
 
         /// <summary>
         /// Child SalesLT_SalesOrderHeaders where [SalesOrderHeader].[BillToAddressID] point to this entity (FK_SalesOrderHeader_Address_BillTo_AddressID)
         /// </summary>
-        public ICollection<SalesLT_SalesOrderHeader> SalesLT_SalesOrderHeaders_BillToAddressId { get; set; } // SalesOrderHeader.FK_SalesOrderHeader_Address_BillTo_AddressID
+        public virtual ICollection<SalesLT_SalesOrderHeader> SalesLT_SalesOrderHeaders_BillToAddressId { get; set; } // SalesOrderHeader.FK_SalesOrderHeader_Address_BillTo_AddressID
 
         /// <summary>
         /// Child SalesLT_SalesOrderHeaders where [SalesOrderHeader].[ShipToAddressID] point to this entity (FK_SalesOrderHeader_Address_ShipTo_AddressID)
         /// </summary>
-        public ICollection<SalesLT_SalesOrderHeader> SalesLT_SalesOrderHeaders_ShipToAddressId { get; set; } // SalesOrderHeader.FK_SalesOrderHeader_Address_ShipTo_AddressID
+        public virtual ICollection<SalesLT_SalesOrderHeader> SalesLT_SalesOrderHeaders_ShipToAddressId { get; set; } // SalesOrderHeader.FK_SalesOrderHeader_Address_ShipTo_AddressID
 
         public SalesLT_Address()
         {

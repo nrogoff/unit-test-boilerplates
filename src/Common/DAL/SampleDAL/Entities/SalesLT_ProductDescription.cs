@@ -21,7 +21,7 @@ namespace SampleDAL
         /// <summary>
         /// Child SalesLT_ProductModelProductDescriptions where [ProductModelProductDescription].[ProductDescriptionID] point to this entity (FK_ProductModelProductDescription_ProductDescription_ProductDescriptionID)
         /// </summary>
-        public ICollection<SalesLT_ProductModelProductDescription> SalesLT_ProductModelProductDescriptions { get; set; } // ProductModelProductDescription.FK_ProductModelProductDescription_ProductDescription_ProductDescriptionID
+        public virtual ICollection<SalesLT_ProductModelProductDescription> SalesLT_ProductModelProductDescriptions { get; set; } // ProductModelProductDescription.FK_ProductModelProductDescription_ProductDescription_ProductDescriptionID
 
         public SalesLT_ProductDescription()
         {

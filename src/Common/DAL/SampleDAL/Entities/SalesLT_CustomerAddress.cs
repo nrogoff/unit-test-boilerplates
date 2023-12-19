@@ -22,12 +22,12 @@ namespace SampleDAL
         /// <summary>
         /// Parent SalesLT_Address pointed by [CustomerAddress].([AddressId]) (FK_CustomerAddress_Address_AddressID)
         /// </summary>
-        public SalesLT_Address SalesLT_Address { get; set; } // FK_CustomerAddress_Address_AddressID
+        public virtual SalesLT_Address SalesLT_Address { get; set; } // FK_CustomerAddress_Address_AddressID
 
         /// <summary>
         /// Parent SalesLT_Customer pointed by [CustomerAddress].([CustomerId]) (FK_CustomerAddress_Customer_CustomerID)
         /// </summary>
-        public SalesLT_Customer SalesLT_Customer { get; set; } // FK_CustomerAddress_Customer_CustomerID
+        public virtual SalesLT_Customer SalesLT_Customer { get; set; } // FK_CustomerAddress_Customer_CustomerID
 
         public SalesLT_CustomerAddress()
         {

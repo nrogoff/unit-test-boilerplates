@@ -39,24 +39,24 @@ namespace SampleDAL
         /// <summary>
         /// Child SalesLT_SalesOrderDetails where [SalesOrderDetail].[SalesOrderID] point to this entity (FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID)
         /// </summary>
-        public ICollection<SalesLT_SalesOrderDetail> SalesLT_SalesOrderDetails { get; set; } // SalesOrderDetail.FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID
+        public virtual ICollection<SalesLT_SalesOrderDetail> SalesLT_SalesOrderDetails { get; set; } // SalesOrderDetail.FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID
 
         // Foreign keys
 
         /// <summary>
         /// Parent SalesLT_Address pointed by [SalesOrderHeader].([BillToAddressId]) (FK_SalesOrderHeader_Address_BillTo_AddressID)
         /// </summary>
-        public SalesLT_Address BillToAddress { get; set; } // FK_SalesOrderHeader_Address_BillTo_AddressID
+        public virtual SalesLT_Address BillToAddress { get; set; } // FK_SalesOrderHeader_Address_BillTo_AddressID
 
         /// <summary>
         /// Parent SalesLT_Address pointed by [SalesOrderHeader].([ShipToAddressId]) (FK_SalesOrderHeader_Address_ShipTo_AddressID)
         /// </summary>
-        public SalesLT_Address ShipToAddress { get; set; } // FK_SalesOrderHeader_Address_ShipTo_AddressID
+        public virtual SalesLT_Address ShipToAddress { get; set; } // FK_SalesOrderHeader_Address_ShipTo_AddressID
 
         /// <summary>
         /// Parent SalesLT_Customer pointed by [SalesOrderHeader].([CustomerId]) (FK_SalesOrderHeader_Customer_CustomerID)
         /// </summary>
-        public SalesLT_Customer SalesLT_Customer { get; set; } // FK_SalesOrderHeader_Customer_CustomerID
+        public virtual SalesLT_Customer SalesLT_Customer { get; set; } // FK_SalesOrderHeader_Customer_CustomerID
 
         public SalesLT_SalesOrderHeader()
         {
